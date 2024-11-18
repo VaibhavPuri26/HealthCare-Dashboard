@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="form-title">
+            <h1>Healthcare Registration</h1>
+        </div>
+        <form action="/submit" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your full name">
+            </div>
+            
+            <div class="form-group">
+                <label for="age">Age</label>
+                <select id="age" name="age" required>
+                    <option value="">Select your age</option>
+                    {% for age in range(1, 101) %}
+                        <option value="{{ age }}">{{ age }} years</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="file">Medical Document</label>
+                <div class="file-input">
+                    <input type="file" id="actual-file" name="file" accept=".pdf,.doc,.docx" onchange="updateFileName(this)">
+                    <span> Click to Upload</span>
+                </div>
+                <div id="file-chosen"></div>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Information</button>
+        </form>
+    </div>
+
+    <script>
+        function updateFileName(input) {
+            const fileChosen = document.getElementById('file-chosen');
+            if (input.files && input.files.length > 0) {
+                fileChosen.textContent = `Selected file: ${input.files[0].name}`;
+            } else {
+                fileChosen.textContent = '';
+            }
+        }
+    </script>
+</body>
+</html>
